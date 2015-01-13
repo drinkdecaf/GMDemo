@@ -16,16 +16,21 @@
     <sprite>sprites\sPlayer</sprite>
     <sprite>sprites\sBullet</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bgFloor</background>
+    <background>background\bgGameOver</background>
+  </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\oEnemy</object>
     <object>objects\oBullet</object>
     <object>objects\oPlayer</object>
     <object>objects\oGun</object>
+    <object>objects\oGame</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room1</room>
+    <room>rooms\level1</room>
+    <room>rooms\gameover</room>
   </rooms>
   <constants number="2">
     <constant name="GM_build_date">42010.4518506597</constant>

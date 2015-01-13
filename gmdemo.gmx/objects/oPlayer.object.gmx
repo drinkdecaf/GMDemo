@@ -56,25 +56,25 @@ MyAngle = 0 //player angle
 AngleGoal = 0 //player intended angle, based off of movement
 KeysPressed = 0 //how many directional keys being pressed
 
-if keyboard_check(ord('W')) {
+if keyboard_check(ord('W')) and y &gt; 0 {
     y = y - MySpeed
     MySprite = "walk"
     AngleGoal += 90
     KeysPressed += 1
 }
-if keyboard_check(ord('S')) {
+if keyboard_check(ord('S')) and y &lt; room_height {
     y = y + MySpeed
     MySprite = "walk"
     AngleGoal += 270
     KeysPressed += 1    
 }
-if keyboard_check(ord('A')) {
+if keyboard_check(ord('A')) and x &gt; 0 {
     x = x - MySpeed
     MySprite = "walk"
     AngleGoal += 180
     KeysPressed += 1    
 }
-if keyboard_check(ord('D')) {
+if keyboard_check(ord('D')) and x &lt; room_width {
     x = x + MySpeed
     MySprite = "walk"
     if keyboard_check(ord('W')) {
@@ -89,9 +89,11 @@ if keyboard_check(ord('D')) {
 
 if MySprite == "still" {
     sprite_index = sPlayer
+    audio_stop_sound(dRun)
 } else {
     sprite_index = sPlayerWalk
-    audio_play_sound(dRun, 1, false)
+    if !audio_is_playing(dRun)
+    audio_play_sound(dRun, 1, true)
 }
 
 
@@ -120,6 +122,21 @@ if mouse_check_button(mb_left) {
     MyBullet.speed = 20
     MyBullet.image_angle = MyGun.image_angle + BulletOffset
     
+}
+
+/* Getting Hit */
+IncomingEnemy = instance_place(x,y,oEnemy)
+
+if instance_exists(IncomingEnemy) {
+    audio_stop_all()
+    audio_play_sound(dDie, 2, false)
+    
+    with(oEnemy) {
+        instance_destroy()
+    }
+    
+    room_goto(gameover)
+    instance_destroy()
 }
 </string>
           </argument>
