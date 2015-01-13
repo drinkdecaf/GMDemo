@@ -70,20 +70,23 @@ if keyboard_check_pressed(ord('R')) {
     game_restart()
 }
 
-if score &gt; 2 and instance_number(oEnemy) &lt; 2 {
-    instance_create(random(room_width), random(room_height), oEnemy)
-}
+if room == level1 {
 
-if score &gt; 6 and instance_number(oEnemy) &lt; 3 {
-    instance_create(random(room_width), random(room_height), oEnemy)
-}
+    if score &gt; 2 and instance_number(oEnemy) &lt; 2 {
+        instance_create(random(room_width), random(room_height), oEnemy)
+    }
 
-if score &gt; 10 and instance_number(oEnemy) &lt; 4 {
-    instance_create(random(room_width), random(room_height), oEnemy)
-}
+    if score &gt; 6 and instance_number(oEnemy) &lt; 3 {
+        instance_create(random(room_width), random(room_height), oEnemy)
+    }
 
-if score &gt; 15 and instance_number(oEnemy) &lt; 6 {
-    instance_create(random(room_width), random(room_height), oEnemy)
+    if score &gt; 10 and instance_number(oEnemy) &lt; 4 {
+        instance_create(random(room_width), random(room_height), oEnemy)
+    }
+    
+    if score &gt; 15 and instance_number(oEnemy) &lt; 6 {
+        instance_create(random(room_width), random(room_height), oEnemy)
+    }
 }
 </string>
           </argument>
