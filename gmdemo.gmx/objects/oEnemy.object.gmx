@@ -125,6 +125,8 @@ if instance_exists(IncomingBullet) {
     with IncomingBullet {
         instance_destroy()
     }
+    
+    audio_play_sound(dHit, 1, false)
 
     //Shrink ourselves
     image_xscale = image_xscale - 0.2

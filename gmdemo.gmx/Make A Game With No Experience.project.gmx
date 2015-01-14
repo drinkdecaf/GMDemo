@@ -9,6 +9,7 @@
     <sound>sound\dDie</sound>
     <sound>sound\dRun</sound>
     <sound>sound\dPoof</sound>
+    <sound>sound\dHit</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\sEnemy</sprite>
