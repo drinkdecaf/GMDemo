@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>MyGun = instance_create(x, y, oGun)
+BulletColor = -1
 </string>
           </argument>
         </arguments>
@@ -121,6 +122,7 @@ if mouse_check_button(mb_left) {
     MyBullet.direction = MyGun.image_angle + BulletOffset
     MyBullet.speed = 20
     MyBullet.image_angle = MyGun.image_angle + BulletOffset
+    MyBullet.image_blend = BulletColor
     
 }
 
@@ -128,15 +130,7 @@ if mouse_check_button(mb_left) {
 IncomingEnemy = instance_place(x,y,oEnemy)
 
 if instance_exists(IncomingEnemy) {
-    audio_stop_all()
-    audio_play_sound(dDie, 2, false)
-    
-    with(oEnemy) {
-        instance_destroy()
-    }
-    
-    room_goto(gameover)
-    instance_destroy()
+    oGame.GameOver = true;
 }
 </string>
           </argument>

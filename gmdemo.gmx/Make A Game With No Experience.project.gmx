@@ -8,6 +8,7 @@
     <sound>sound\dShoot</sound>
     <sound>sound\dDie</sound>
     <sound>sound\dRun</sound>
+    <sound>sound\dPoof</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\sEnemy</sprite>
@@ -15,6 +16,9 @@
     <sprite>sprites\sPlayerWalk</sprite>
     <sprite>sprites\sPlayer</sprite>
     <sprite>sprites\sBullet</sprite>
+    <sprite>sprites\sRock</sprite>
+    <sprite>sprites\sEnemyEyes</sprite>
+    <sprite>sprites\sShadow</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgFloor</background>
@@ -27,6 +31,8 @@
     <object>objects\oPlayer</object>
     <object>objects\oGun</object>
     <object>objects\oGame</object>
+    <object>objects\oRock</object>
+    <object>objects\oEnemyEyes</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\level1</room>

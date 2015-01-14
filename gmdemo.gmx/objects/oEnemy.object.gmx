@@ -3,7 +3,7 @@
   <spriteName>sEnemy</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>2</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -29,6 +29,15 @@
 direction = random(360)
 image_xscale = random(3) + .5
 image_yscale = image_xscale
+MyColor = make_colour_hsv(random(255), random(55) + 200, random(55) + 200);
+image_blend = MyColor
+
+while distance_to_object(oPlayer) &lt; 100 { 
+    x = random(room_width)
+    y = random(room_height)
+}
+
+MyEyes = instance_create(x, y, oEnemyEyes)
 </string>
           </argument>
         </arguments>
@@ -51,8 +60,19 @@ image_yscale = image_xscale
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/* Facing */
+            <string>if (instance_exists(MyEyes)) {
+    MyEyes.x = x
+    MyEyes.y = y
+    MyEyes.image_angle = image_angle
+    MyEyes.image_xscale = image_xscale
+    MyEyes.image_yscale = image_yscale
+    MyEyes.direction = direction
+    MyEyes.speed = speed
+}
+
+/* Facing */
 image_angle = direction
+
 
 /* Bouncing */
 
@@ -62,6 +82,15 @@ if y &lt; 0 or y &gt; room_height {
 
 if x &lt; 0 or x &gt; room_width {
     hspeed = hspeed * - 1
+}
+
+/* Randomly Grow */
+if distance_to_object(oPlayer) &gt; 100 &amp;&amp; random(1000) &lt; 5 and image_xscale &lt; 4 {
+    image_xscale += 0.2
+    image_yscale = image_xscale
+    if speed &gt; 2 {
+        speed -= .5
+    }
 }
 
 /* Damage */
@@ -79,18 +108,25 @@ if instance_exists(IncomingBullet) {
     image_xscale = image_xscale - 0.2
     image_yscale = image_xscale
     
+    if speed &lt; 11 {
+        speed += 1
+    }
+    
     //Destroy us if we've shrunk ourselves to oblivion
     if image_xscale &lt;= 0.2 {
-        audio_play_sound(dDie, 1, false)
+        audio_play_sound(dPoof, 1, false)
         instance_create(random(room_width), random(room_height), oEnemy)
+        with(MyEyes) {
+            instance_destroy()
+        }
+        oGame.score ++;  
+        oPlayer.BulletColor = MyColor      
         instance_destroy()
         
-        oGame.score ++;
+
     }
 
 }
-
-
 </string>
           </argument>
         </arguments>

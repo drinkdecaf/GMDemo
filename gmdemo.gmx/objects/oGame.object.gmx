@@ -25,7 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>window_set_fullscreen(false)
+            <string>GameOver = false
+DieTime = 60 // how long after death we go to game over screen
+Timer = DieTime
+
+window_set_fullscreen(false)
 
 //How big is the screen?
 ScreenWidth = display_get_width();
@@ -70,21 +74,47 @@ if keyboard_check_pressed(ord('R')) {
     game_restart()
 }
 
+if GameOver {
+    if Timer == DieTime {
+        audio_stop_all()
+        audio_play_sound(dDie, 2, false)
+    
+        with(oPlayer){
+            instance_destroy()
+        }
+        
+        with (oGun) {
+            instance_destroy()
+        }
+    }
+    
+    Timer --;
+    
+    if Timer &lt;= 0 {
+        with(oEnemy) {
+            instance_destroy()
+        }
+     
+        room_goto(gameover)
+     }
+
+}
+
 if room == level1 {
 
-    if score &gt; 2 and instance_number(oEnemy) &lt; 2 {
+    if instance_number(oEnemy) &lt; 2 {
         instance_create(random(room_width), random(room_height), oEnemy)
     }
 
-    if score &gt; 6 and instance_number(oEnemy) &lt; 3 {
+    if score &gt; 3 and instance_number(oEnemy) &lt; 3 {
         instance_create(random(room_width), random(room_height), oEnemy)
     }
 
-    if score &gt; 10 and instance_number(oEnemy) &lt; 4 {
+    if score &gt; 5 and instance_number(oEnemy) &lt; 4 {
         instance_create(random(room_width), random(room_height), oEnemy)
     }
     
-    if score &gt; 15 and instance_number(oEnemy) &lt; 6 {
+    if score &gt; 10 and instance_number(oEnemy) &lt; 6 {
         instance_create(random(room_width), random(room_height), oEnemy)
     }
 }
