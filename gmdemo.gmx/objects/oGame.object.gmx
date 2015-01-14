@@ -80,6 +80,13 @@ if GameOver {
         audio_play_sound(dDie, 2, false)
     
         with(oPlayer){
+        
+            if instance_exists(MyShadow) {
+                with(MyShadow) {
+                    instance_destroy()
+                }
+            }
+        
             instance_destroy()
         }
         

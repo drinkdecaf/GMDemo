@@ -31,6 +31,9 @@ image_xscale = random(3) + .5
 image_yscale = image_xscale
 MyColor = make_colour_hsv(random(255), random(55) + 200, random(55) + 200);
 image_blend = MyColor
+MyMarker = instance_create(-1000, -1000, oMarker)
+MyMarker.image_blend = MyColor
+MarkerEdge = 10 //dist of marker from screen edge
 
 while distance_to_object(oPlayer) &lt; 100 { 
     x = random(room_width)
@@ -85,7 +88,7 @@ if (instance_exists(MyShadow)) {
 }
 
 /* Slime */
-if (random(50) &lt; 5) {
+if (random(50) &lt; 9) {
     NewSplat = instance_create(x, y, oSplat)
     NewSplat.image_blend = MyColor
     NewSplat.image_xscale = image_xscale
@@ -154,14 +157,36 @@ if instance_exists(IncomingBullet) {
         with(MyShadow) {
             instance_destroy()
         }
+        with(MyMarker) {
+            instance_destroy()
+        }
         oGame.score ++;  
         oPlayer.BulletColor = MyColor      
         instance_destroy()
-        
-
     }
-
 }
+
+
+/* Marker */
+
+//Am I off Screen?
+
+if instance_exists(MyMarker) {
+    MyMarker.x = -1000
+    MyMarker.y = -1000
+
+    if x &lt; view_xview or x &gt; view_xview + view_wview or y &lt; view_yview or y &gt; view_yview + view_hview {
+        CenterX = view_xview + (view_wview / 2)
+        CenterY = view_yview + (view_hview / 2)
+        if (line_rect_col_inside(CenterX, CenterY, x, y, view_xview + MarkerEdge, view_yview + MarkerEdge, view_xview + view_wview - MarkerEdge, view_yview + view_hview - MarkerEdge)) {
+            if distance_to_point(_x, _y) &gt; 30 {
+                MyMarker.x = _x
+                MyMarker.y = _y
+            }
+        }
+    } 
+}
+
 </string>
           </argument>
         </arguments>

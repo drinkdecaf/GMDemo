@@ -136,6 +136,12 @@ if mouse_check_button(mb_left) {
 IncomingEnemy = instance_place(x,y,oEnemy)
 
 if instance_exists(IncomingEnemy) {
+    for (i = 0; i &lt; 10; i++) {
+        NewSplat = instance_create(x + random(40) - 20, y + random(40) - 20, oSplat)
+        NewSplat.image_blend = make_colour_rgb(5,5,5)
+        NewSplat.image_xscale = random(2) + .5
+        NewSplat.image_yscale = NewSplat.image_xscale
+    }
     oGame.GameOver = true;
 }
 </string>

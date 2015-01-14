@@ -22,11 +22,15 @@
     <sprite>sprites\sShadow</sprite>
     <sprite>sprites\sSplat</sprite>
     <sprite>sprites\sGameOver</sprite>
+    <sprite>sprites\sMarker</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgFloor</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\line_rect_col_inside.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\oEnemy</object>
     <object>objects\oBullet</object>
@@ -38,6 +42,7 @@
     <object>objects\oShadow</object>
     <object>objects\oSplat</object>
     <object>objects\oGameOver</object>
+    <object>objects\oMarker</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\level1</room>
