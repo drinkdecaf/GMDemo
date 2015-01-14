@@ -1,3 +1,5 @@
+// this function was written by torigara
+//
 // line_rect_col_inside(x1, y1, x2, y2, bleft, btop, bright, bbottom):
 // arguments:
 //  (x1, y1) the starting point of the line (must be inside the rectangle)
