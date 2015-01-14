@@ -38,6 +38,10 @@ while distance_to_object(oPlayer) &lt; 100 {
 }
 
 MyEyes = instance_create(x, y, oEnemyEyes)
+MyShadow = instance_create(x, y, oShadow)
+MyShadow.image_alpha = 0.5
+MyShadow.image_xscale = image_xscale
+MyShadow.image_yscale = image_xscale
 </string>
           </argument>
         </arguments>
@@ -68,6 +72,24 @@ MyEyes = instance_create(x, y, oEnemyEyes)
     MyEyes.image_yscale = image_yscale
     MyEyes.direction = direction
     MyEyes.speed = speed
+}
+
+if (instance_exists(MyShadow)) {
+    MyShadow.x = x
+    MyShadow.y = y
+    MyShadow.image_angle = image_angle
+    MyShadow.image_xscale = image_xscale * 1.8
+    MyShadow.image_yscale = image_yscale * 1.8
+    MyShadow.direction = direction
+    MyShadow.speed = speed
+}
+
+/* Slime */
+if (random(50) &lt; 5) {
+    NewSplat = instance_create(x, y, oSplat)
+    NewSplat.image_blend = MyColor
+    NewSplat.image_xscale = image_xscale
+    NewSplat.image_yscale = image_xscale
 }
 
 /* Facing */
@@ -115,8 +137,19 @@ if instance_exists(IncomingBullet) {
     //Destroy us if we've shrunk ourselves to oblivion
     if image_xscale &lt;= 0.2 {
         audio_play_sound(dPoof, 1, false)
+        
+        for (i = 0; i &lt; 10; i++) {
+            NewSplat = instance_create(x + random(40) - 20, y + random(40) - 20, oSplat)
+            NewSplat.image_blend = MyColor
+            NewSplat.image_xscale = random(2) + .5
+            NewSplat.image_yscale = NewSplat.image_xscale
+        }
+        
         instance_create(random(room_width), random(room_height), oEnemy)
         with(MyEyes) {
+            instance_destroy()
+        }
+        with(MyShadow) {
             instance_destroy()
         }
         oGame.score ++;  

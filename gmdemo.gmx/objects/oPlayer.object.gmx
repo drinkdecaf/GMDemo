@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>MyGun = instance_create(x, y, oGun)
+MyShadow = instance_create(x, y, oShadow)
+MyShadow.image_alpha = 0.5
 BulletColor = -1
 </string>
           </argument>
@@ -109,6 +111,10 @@ if KeysPressed &gt; 0 and KeysPressed &lt;= 2 {
 MyGun.x = x
 MyGun.y = y
 MyGun.image_angle = point_direction(x,y,mouse_x,mouse_y)
+
+//so does shadow
+MyShadow.x = x
+MyShadow.y = y
 
 /* Firing */
 
