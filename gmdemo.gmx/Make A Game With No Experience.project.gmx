@@ -21,10 +21,10 @@
     <sprite>sprites\sEnemyEyes</sprite>
     <sprite>sprites\sShadow</sprite>
     <sprite>sprites\sSplat</sprite>
+    <sprite>sprites\sGameOver</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgFloor</background>
-    <background>background\bgGameOver</background>
   </backgrounds>
   <paths name="paths"/>
   <objects name="objects">
@@ -37,10 +37,10 @@
     <object>objects\oEnemyEyes</object>
     <object>objects\oShadow</object>
     <object>objects\oSplat</object>
+    <object>objects\oGameOver</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\level1</room>
-    <room>rooms\gameover</room>
   </rooms>
   <constants number="2">
     <constant name="GM_build_date">42010.4518506597</constant>
