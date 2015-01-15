@@ -31,9 +31,13 @@ direction = random(360)
 image_xscale = random(3) + .5
 image_yscale = image_xscale
 
-//random color
-MyColor = make_colour_hsv(random(255), random(55) + 200, random(55) + 200);
-image_blend = MyColor
+MyColor = oPlayer.BulletColor
+
+while (MyColor == oPlayer.BulletColor) {
+    Pick = floor(random(array_length_1d(oGame.PossibleColors)))
+    MyColor = oGame.PossibleColors[Pick];
+    image_blend = MyColor
+}
 
 //try to spawn new enemies away from player
 while distance_to_object(oPlayer) &lt; 200 { 
@@ -137,22 +141,33 @@ if distance_to_object(oPlayer) &gt; 100 &amp;&amp; random(1000) &lt; 5 and image
 IncomingBullet = instance_place(x,y,oBullet)
 
 if instance_exists(IncomingBullet) {
-    
+
+    BulletColor = IncomingBullet.MyColor    
+
     //Destroy the bullet
     with IncomingBullet {
         instance_destroy()
     }
     
     audio_play_sound(dHit, 1, false)
-
-    //Shrink ourselves
-    image_xscale = image_xscale - 0.2
-    image_yscale = image_xscale
     
-    if speed &lt; (390 / room_speed) {
-        speed += 30 / room_speed
+    if (BulletColor == MyColor) {
+        //Grow ourselves
+        if (image_xscale &lt; 4) {
+            image_xscale = image_xscale + 0.2
+            image_yscale = image_xscale
+        }
+          
+    } else {
+        //Shrink ourselves
+        image_xscale = image_xscale - 0.2
+        image_yscale = image_xscale
+        
+        if speed &lt; (390 / room_speed) {
+            speed += 30 / room_speed
+        }
     }
-    
+        
     //Destroy us if we've shrunk ourselves to oblivion
     if image_xscale &lt;= 0.2 {
         audio_play_sound(dPoof, 1, false)

@@ -127,6 +127,7 @@ if mouse_check_button(mb_left) {
     MyBullet.speed = 600 / room_speed
     MyBullet.image_angle = MyGun.image_angle + BulletOffset
     MyBullet.image_blend = BulletColor
+    MyBullet.MyColor = BulletColor
     
     
     //Kickback

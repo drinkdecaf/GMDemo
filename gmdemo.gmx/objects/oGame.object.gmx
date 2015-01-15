@@ -44,6 +44,13 @@ view_wport = ScreenWidth
 view_hport = ScreenHeight
 
 surface_resize(application_surface, ScreenWidth, ScreenHeight)
+
+//random color
+PossibleColors[0] = make_color_hsv(0, 255, 255)
+PossibleColors[1] = make_color_hsv(40, 255, 255)
+PossibleColors[2] = make_color_hsv(100, 255, 255)
+PossibleColors[3] = make_color_hsv(170, 255, 255)
+PossibleColors[4] = make_color_hsv(200, 255, 255)
 </string>
           </argument>
         </arguments>
