@@ -29,13 +29,13 @@
 DieTime = 60 // how long after death we go to game over screen
 Timer = DieTime
 
-window_set_fullscreen(false)
+window_set_fullscreen(true)
 
 //How big is the screen?
 ScreenWidth = display_get_width();
 ScreenHeight = display_get_height();
 
-window_set_size(ScreenWidth, ScreenHeight);
+//window_set_size(ScreenWidth, ScreenHeight);
 
 view_wview = ScreenWidth
 view_hview = ScreenHeight

@@ -204,15 +204,39 @@ if instance_exists(MyMarker) {
 
     //if I'm offscreen...
     if x &lt; view_xview or x &gt; view_xview + view_wview or y &lt; view_yview or y &gt; view_yview + view_hview {
-        CenterX = view_xview + (view_wview / 2)
-        CenterY = view_yview + (view_hview / 2)
+
+        if x &lt; view_xview {
+            MyMarker.x = view_xview + MarkerEdge
+        } else if x &gt; view_xview + view_wview {
+            MyMarker.x = view_xview + view_wview - MarkerEdge
+        } else {
+            MyMarker.x = x
+        }
         
-        //position marker to show where I am
-        if (line_rect_col_inside(CenterX, CenterY, x, y, view_xview + MarkerEdge, view_yview + MarkerEdge, view_xview + view_wview - MarkerEdge, view_yview + view_hview - MarkerEdge)) {
-            if distance_to_point(_x, _y) &gt; 30 {
-                MyMarker.x = _x
-                MyMarker.y = _y
+        if y &lt; view_yview {
+            MyMarker.y = view_yview + MarkerEdge
+        } else if y &gt; view_yview + view_hview {
+            MyMarker.y = view_yview + view_hview - MarkerEdge
+        } else {
+            MyMarker.y = y
+        }     
+        
+        Dist = distance_to_point(MyMarker.x, MyMarker.y)           
+        
+        if Dist &gt;= 30 {
+            if Dist &lt; 486  {
+                Size = (600 - Dist) / 570
+            } else {
+                Size = 0.2
             }
+            
+            MyMarker.image_xscale = Size
+            MyMarker.image_yscale = Size
+                
+        } else {
+            //too close - hide marker
+            MyMarker.x = -1000
+            MyMarker.y = -1000        
         }
     } 
 }

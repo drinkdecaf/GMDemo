@@ -113,18 +113,6 @@ if KeysPressed &gt; 0 and KeysPressed &lt;= 2 {
     image_angle -= angle_difference(image_angle, AngleGoal) / 3 
 }
 
-/* Children Objects */
-
-//gun moves with player
-MyGun.x = x
-MyGun.y = y
-MyGun.image_angle = point_direction(x,y,mouse_x,mouse_y)
-
-//so does shadow
-MyShadow.x = x
-MyShadow.y = y
-
-
 
 /* Firing */
 
@@ -150,6 +138,23 @@ if mouse_check_button(mb_left) {
     
 }
 
+
+/* Children Objects */
+
+//gun moves with player
+MyGun.x = x
+MyGun.y = y
+MyGun.image_angle = point_direction(x,y,mouse_x,mouse_y)
+MyGun.direction = direction
+MyGun.speed = speed
+
+//so does shadow
+MyShadow.x = x
+MyShadow.y = y
+MyShadow.direction = direction
+MyShadow.speed = speed
+
+/* Keep in-bounds */
 
 if x &lt; 0 { x = 0 }
 if y &lt; 0 { y = 0 }
