@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>image_alpha = 0
+FadeIn = 1 / (4 * room_speed)
 </string>
           </argument>
         </arguments>
@@ -49,8 +50,8 @@
           <argument>
             <kind>1</kind>
             <string>if (image_alpha &lt; 1) {
- image_alpha += .001;
- }
+ image_alpha += FadeIn;
+}
 </string>
           </argument>
         </arguments>

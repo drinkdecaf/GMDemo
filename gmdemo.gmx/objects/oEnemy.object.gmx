@@ -25,22 +25,31 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>speed = 3
+            <string>//speed, direction, size
+speed = 180 / room_speed
 direction = random(360)
 image_xscale = random(3) + .5
 image_yscale = image_xscale
+
+//random color
 MyColor = make_colour_hsv(random(255), random(55) + 200, random(55) + 200);
 image_blend = MyColor
-MyMarker = instance_create(-1000, -1000, oMarker)
-MyMarker.image_blend = MyColor
-MarkerEdge = 10 //dist of marker from screen edge
 
-while distance_to_object(oPlayer) &lt; 100 { 
+//try to spawn new enemies away from player
+while distance_to_object(oPlayer) &lt; 200 { 
     x = random(room_width)
     y = random(room_height)
 }
 
+//marker object
+MyMarker = instance_create(-1000, -1000, oMarker)
+MyMarker.image_blend = MyColor
+MarkerEdge = 10 //dist of marker from screen edge
+
+//eyes object
 MyEyes = instance_create(x, y, oEnemyEyes)
+
+//shadow object
 MyShadow = instance_create(x, y, oShadow)
 MyShadow.image_alpha = 0.5
 MyShadow.image_xscale = image_xscale
@@ -67,7 +76,10 @@ MyShadow.image_yscale = image_xscale
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_exists(MyEyes)) {
+            <string>/* Child objects follow Enemy */
+
+//eyes
+if (instance_exists(MyEyes)) {
     MyEyes.x = x
     MyEyes.y = y
     MyEyes.image_angle = image_angle
@@ -77,6 +89,7 @@ MyShadow.image_yscale = image_xscale
     MyEyes.speed = speed
 }
 
+//shadow
 if (instance_exists(MyShadow)) {
     MyShadow.x = x
     MyShadow.y = y
@@ -87,7 +100,9 @@ if (instance_exists(MyShadow)) {
     MyShadow.speed = speed
 }
 
+
 /* Slime */
+
 if (random(50) &lt; 9) {
     NewSplat = instance_create(x, y, oSplat)
     NewSplat.image_blend = MyColor
@@ -97,7 +112,6 @@ if (random(50) &lt; 9) {
 
 /* Facing */
 image_angle = direction
-
 
 /* Bouncing */
 
@@ -113,8 +127,8 @@ if x &lt; 0 or x &gt; room_width {
 if distance_to_object(oPlayer) &gt; 100 &amp;&amp; random(1000) &lt; 5 and image_xscale &lt; 4 {
     image_xscale += 0.2
     image_yscale = image_xscale
-    if speed &gt; 2 {
-        speed -= .5
+    if speed &gt; (90 / room_speed) {
+        speed -= (room_speed / 120)
     }
 }
 
@@ -135,8 +149,8 @@ if instance_exists(IncomingBullet) {
     image_xscale = image_xscale - 0.2
     image_yscale = image_xscale
     
-    if speed &lt; 11 {
-        speed += 1
+    if speed &lt; (390 / room_speed) {
+        speed += 30 / room_speed
     }
     
     //Destroy us if we've shrunk ourselves to oblivion
@@ -150,18 +164,31 @@ if instance_exists(IncomingBullet) {
             NewSplat.image_yscale = NewSplat.image_xscale
         }
         
+        //Create New Enemy
         instance_create(random(room_width), random(room_height), oEnemy)
+        
+        //Destroy Eyes Obj
         with(MyEyes) {
             instance_destroy()
         }
+        
+        //Destroy Shadow Obj
         with(MyShadow) {
             instance_destroy()
         }
+        
+        //Destroy Marker Obj
         with(MyMarker) {
             instance_destroy()
         }
-        oGame.score ++;  
+        
+        //track score
+        oGame.score ++;
+        
+        //change bullet color  
         oPlayer.BulletColor = MyColor      
+        
+        //byee
         instance_destroy()
     }
 }
@@ -169,15 +196,18 @@ if instance_exists(IncomingBullet) {
 
 /* Marker */
 
-//Am I off Screen?
-
 if instance_exists(MyMarker) {
+    
+    //default to off-screen to hide
     MyMarker.x = -1000
     MyMarker.y = -1000
 
+    //if I'm offscreen...
     if x &lt; view_xview or x &gt; view_xview + view_wview or y &lt; view_yview or y &gt; view_yview + view_hview {
         CenterX = view_xview + (view_wview / 2)
         CenterY = view_yview + (view_hview / 2)
+        
+        //position marker to show where I am
         if (line_rect_col_inside(CenterX, CenterY, x, y, view_xview + MarkerEdge, view_yview + MarkerEdge, view_xview + view_wview - MarkerEdge, view_yview + view_hview - MarkerEdge)) {
             if distance_to_point(_x, _y) &gt; 30 {
                 MyMarker.x = _x

@@ -25,9 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>MyGun = instance_create(x, y, oGun)
+            <string>// Initialize Gun Object
+MyGun = instance_create(x, y, oGun)
+
+// Initialize Shadow
 MyShadow = instance_create(x, y, oShadow)
 MyShadow.image_alpha = 0.5
+
+// Track Bullet Color
 BulletColor = -1
 </string>
           </argument>
@@ -53,9 +58,9 @@ BulletColor = -1
             <kind>1</kind>
             <string>/* Movement */
 
-MySpeed = 10
-MySprite = "still" //standing or walking sprite
-MyAngle = 0 //player angle
+// reset movement variables
+MySpeed = 300 / room_speed
+MySprite = "still" //which sprite is used to show player
 AngleGoal = 0 //player intended angle, based off of movement
 KeysPressed = 0 //how many directional keys being pressed
 
@@ -80,6 +85,8 @@ if keyboard_check(ord('A')) and x &gt; 0 {
 if keyboard_check(ord('D')) and x &lt; room_width {
     x = x + MySpeed
     MySprite = "walk"
+    
+    // a little weird, but keeps maths simpler later...
     if keyboard_check(ord('W')) {
         AngleGoal += 0
     } else {
@@ -89,23 +96,24 @@ if keyboard_check(ord('D')) and x &lt; room_width {
 }
 
 
-
+// swap out walking or standing sprite
 if MySprite == "still" {
     sprite_index = sPlayer
     audio_stop_sound(dRun)
 } else {
     sprite_index = sPlayerWalk
-    if !audio_is_playing(dRun)
-    audio_play_sound(dRun, 1, true)
+    if !audio_is_playing(dRun) { audio_play_sound(dRun, 1, true) }
 }
 
 
-/* Facing */
+/* Player Facing */
 
 if KeysPressed &gt; 0 and KeysPressed &lt;= 2 {
     AngleGoal = AngleGoal / KeysPressed
     image_angle -= angle_difference(image_angle, AngleGoal) / 3 
 }
+
+/* Children Objects */
 
 //gun moves with player
 MyGun.x = x
@@ -115,6 +123,8 @@ MyGun.image_angle = point_direction(x,y,mouse_x,mouse_y)
 //so does shadow
 MyShadow.x = x
 MyShadow.y = y
+
+
 
 /* Firing */
 
@@ -126,16 +136,33 @@ if mouse_check_button(mb_left) {
     BulletOffset = random_range(-5, 5)
     
     MyBullet.direction = MyGun.image_angle + BulletOffset
-    MyBullet.speed = 20
+    MyBullet.speed = 600 / room_speed
     MyBullet.image_angle = MyGun.image_angle + BulletOffset
     MyBullet.image_blend = BulletColor
     
+    
+    //Kickback
+    Kick = 5
+    KickDirection = MyGun.image_angle + 180
+    
+    x += lengthdir_x(Kick, KickDirection)
+    y += lengthdir_y(Kick, KickDirection)
+    
 }
 
+
+if x &lt; 0 { x = 0 }
+if y &lt; 0 { y = 0 }
+if x &gt; room_width { x = room_width }
+if y &gt; room_height { y = room_height }
+
+
 /* Getting Hit */
+
 IncomingEnemy = instance_place(x,y,oEnemy)
 
 if instance_exists(IncomingEnemy) {
+    //splat!
     for (i = 0; i &lt; 10; i++) {
         NewSplat = instance_create(x + random(40) - 20, y + random(40) - 20, oSplat)
         NewSplat.image_blend = make_colour_rgb(5,5,5)
@@ -144,6 +171,8 @@ if instance_exists(IncomingEnemy) {
     }
     oGame.GameOver = true;
 }
+
+
 </string>
           </argument>
         </arguments>
