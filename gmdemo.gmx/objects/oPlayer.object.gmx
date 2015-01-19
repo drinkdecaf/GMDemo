@@ -99,10 +99,10 @@ if keyboard_check(ord('D')) and x &lt; room_width {
 // swap out walking or standing sprite
 if MySprite == "still" {
     sprite_index = sPlayer
-    audio_stop_sound(dRun)
+    audio_stop_sound(aRun)
 } else {
     sprite_index = sPlayerWalk
-    if !audio_is_playing(dRun) { audio_play_sound(dRun, 1, true) }
+    if !audio_is_playing(aRun) { audio_play_sound(aRun, 1, true) }
 }
 
 
@@ -117,7 +117,7 @@ if KeysPressed &gt; 0 and KeysPressed &lt;= 2 {
 /* Firing */
 
 if mouse_check_button(mb_left) {
-    audio_play_sound(dShoot, 1, false)
+    audio_play_sound(aShoot, 1, false)
 
     MyBullet = instance_create(x,y,oBullet)
     

@@ -5,11 +5,12 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound">
-    <sound>sound\dShoot</sound>
-    <sound>sound\dDie</sound>
-    <sound>sound\dRun</sound>
-    <sound>sound\dPoof</sound>
-    <sound>sound\dHit</sound>
+    <sound>sound\aShoot</sound>
+    <sound>sound\aDie</sound>
+    <sound>sound\aRun</sound>
+    <sound>sound\aPoof</sound>
+    <sound>sound\aHit</sound>
+    <sound>sound\aSpawn</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\sEnemy</sprite>

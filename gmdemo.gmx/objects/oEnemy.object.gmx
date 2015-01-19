@@ -149,7 +149,7 @@ if instance_exists(IncomingBullet) {
         instance_destroy()
     }
     
-    audio_play_sound(dHit, 1, false)
+    audio_play_sound(aHit, 1, false)
     
     if (BulletColor == MyColor) {
         //Grow ourselves
@@ -169,8 +169,8 @@ if instance_exists(IncomingBullet) {
     }
         
     //Destroy us if we've shrunk ourselves to oblivion
-    if image_xscale &lt;= 0.2 {
-        audio_play_sound(dPoof, 1, false)
+    if image_xscale &lt;= 0.4 {
+        audio_play_sound(aPoof, 1, false)
         
         for (i = 0; i &lt; 10; i++) {
             NewSplat = instance_create(x + random(40) - 20, y + random(40) - 20, oSplat)
@@ -178,6 +178,9 @@ if instance_exists(IncomingBullet) {
             NewSplat.image_xscale = random(2) + .5
             NewSplat.image_yscale = NewSplat.image_xscale
         }
+        
+        //change bullet color  
+        oPlayer.BulletColor = MyColor    
         
         //Create New Enemy
         instance_create(random(room_width), random(room_height), oEnemy)
@@ -198,10 +201,7 @@ if instance_exists(IncomingBullet) {
         }
         
         //track score
-        oGame.score ++;
-        
-        //change bullet color  
-        oPlayer.BulletColor = MyColor      
+        oGame.score ++;  
         
         //byee
         instance_destroy()
@@ -254,6 +254,18 @@ if instance_exists(MyMarker) {
             MyMarker.y = -1000        
         }
     } 
+}
+
+if (image_xscale &gt; 3.6 &amp;&amp; random(1000) &lt; 6) {
+    //Create New Enemy
+    MyChild = instance_create(x, y, oEnemy);
+    MyChild.MyColor = MyColor
+    MyChild.image_blend = MyColor
+    
+    image_xscale -= 2;
+    image_yscale = image_xscale;  
+    
+    audio_play_sound(aSpawn, 1, false)
 }
 
 </string>

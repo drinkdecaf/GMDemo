@@ -84,7 +84,7 @@ if keyboard_check_pressed(ord('R')) {
 if GameOver {
     if Timer == DieTime {
         audio_stop_all()
-        audio_play_sound(dDie, 2, false)
+        audio_play_sound(aDie, 2, false)
     
         with(oPlayer){
         
