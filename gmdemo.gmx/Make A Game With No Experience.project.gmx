@@ -18,8 +18,6 @@
     <sprite>sprites\sPlayerWalk</sprite>
     <sprite>sprites\sPlayer</sprite>
     <sprite>sprites\sBullet</sprite>
-    <sprite>sprites\sRock</sprite>
-    <sprite>sprites\sEnemyEyes</sprite>
     <sprite>sprites\sShadow</sprite>
     <sprite>sprites\sSplat</sprite>
     <sprite>sprites\sGameOver</sprite>
@@ -31,6 +29,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\line_rect_col_inside.gml</script>
+    <script>scripts\SplitIntoTwo.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\oEnemy</object>
@@ -38,8 +37,6 @@
     <object>objects\oPlayer</object>
     <object>objects\oGun</object>
     <object>objects\oGame</object>
-    <object>objects\oRock</object>
-    <object>objects\oEnemyEyes</object>
     <object>objects\oShadow</object>
     <object>objects\oSplat</object>
     <object>objects\oGameOver</object>

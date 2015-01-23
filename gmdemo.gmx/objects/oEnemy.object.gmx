@@ -31,33 +31,30 @@ direction = random(360)
 image_xscale = random(3) + .5
 image_yscale = image_xscale
 
-MyColor = oPlayer.BulletColor
+ExcludeColor = -1
 
-while (MyColor == oPlayer.BulletColor) {
+if (instance_exists(oPlayer)) {
+    ExcludeColor = oPlayer.BulletColor
+}
+
+MyColor = ExcludeColor
+
+while (MyColor == ExcludeColor) {
     Pick = floor(random(array_length_1d(oGame.PossibleColors)))
     MyColor = oGame.PossibleColors[Pick];
-    image_blend = MyColor
 }
-
-//try to spawn new enemies away from player
-while distance_to_object(oPlayer) &lt; 200 { 
-    x = random(room_width)
-    y = random(room_height)
-}
+image_blend = MyColor
 
 //marker object
 MyMarker = instance_create(-1000, -1000, oMarker)
 MyMarker.image_blend = MyColor
 MarkerEdge = 10 //dist of marker from screen edge
 
-//eyes object
-MyEyes = instance_create(x, y, oEnemyEyes)
-
 //shadow object
 MyShadow = instance_create(x, y, oShadow)
 MyShadow.image_alpha = 0.5
-MyShadow.image_xscale = image_xscale
-MyShadow.image_yscale = image_xscale
+MyShadow.image_xscale = image_xscale * 0.8
+MyShadow.image_yscale = image_xscale * 0.8
 </string>
           </argument>
         </arguments>
@@ -82,24 +79,13 @@ MyShadow.image_yscale = image_xscale
             <kind>1</kind>
             <string>/* Child objects follow Enemy */
 
-//eyes
-if (instance_exists(MyEyes)) {
-    MyEyes.x = x
-    MyEyes.y = y
-    MyEyes.image_angle = image_angle
-    MyEyes.image_xscale = image_xscale
-    MyEyes.image_yscale = image_yscale
-    MyEyes.direction = direction
-    MyEyes.speed = speed
-}
-
 //shadow
 if (instance_exists(MyShadow)) {
     MyShadow.x = x
     MyShadow.y = y
     MyShadow.image_angle = image_angle
-    MyShadow.image_xscale = image_xscale * 1.8
-    MyShadow.image_yscale = image_yscale * 1.8
+    MyShadow.image_xscale = image_xscale * 1.2
+    MyShadow.image_yscale = image_yscale * 1.2
     MyShadow.direction = direction
     MyShadow.speed = speed
 }
@@ -107,15 +93,21 @@ if (instance_exists(MyShadow)) {
 
 /* Slime */
 
-if (random(50) &lt; 9) {
+if (random(50) &lt; 15) {
     NewSplat = instance_create(x, y, oSplat)
     NewSplat.image_blend = MyColor
-    NewSplat.image_xscale = image_xscale
-    NewSplat.image_yscale = image_xscale
+    NewSplat.image_xscale = random(image_xscale * 0.6)
+    NewSplat.image_yscale = NewSplat.image_xscale
+    NewSplat.speed = random(speed * 0.6)
+    NewSplat.direction = random(360)
 }
 
 /* Facing */
-image_angle = direction
+SpinSpeed = 16
+
+if image_xscale &gt; 1 { SpinSpeed = SpinSpeed / image_xscale }
+
+image_angle += SpinSpeed
 
 /* Bouncing */
 
@@ -156,6 +148,8 @@ if instance_exists(IncomingBullet) {
         if (image_xscale &lt; 4) {
             image_xscale = image_xscale + 0.2
             image_yscale = image_xscale
+        } else {
+            SplitIntoTwo();
         }
           
     } else {
@@ -175,24 +169,21 @@ if instance_exists(IncomingBullet) {
         for (i = 0; i &lt; 10; i++) {
             NewSplat = instance_create(x + random(40) - 20, y + random(40) - 20, oSplat)
             NewSplat.image_blend = MyColor
-            NewSplat.image_xscale = random(2) + .5
+            NewSplat.image_xscale = random(1) + .25
             NewSplat.image_yscale = NewSplat.image_xscale
+            NewSplat.direction = random(360);
+            NewSplat.speed = random(speed * 1.5)
+            NewSplat.image_angle = random(360)
         }
         
         //change bullet color  
         oPlayer.BulletColor = MyColor    
         
-        //Create New Enemy
-        instance_create(random(room_width), random(room_height), oEnemy)
-        
-        //Destroy Eyes Obj
-        with(MyEyes) {
-            instance_destroy()
-        }
-        
         //Destroy Shadow Obj
-        with(MyShadow) {
-            instance_destroy()
+        if (instance_exists(MyShadow)) {
+            with(MyShadow) {
+                instance_destroy()
+            }
         }
         
         //Destroy Marker Obj
@@ -216,6 +207,7 @@ if instance_exists(MyMarker) {
     //default to off-screen to hide
     MyMarker.x = -1000
     MyMarker.y = -1000
+    MyMarker.image_blend = MyColor
 
     //if I'm offscreen...
     if x &lt; view_xview or x &gt; view_xview + view_wview or y &lt; view_yview or y &gt; view_yview + view_hview {
@@ -257,15 +249,7 @@ if instance_exists(MyMarker) {
 }
 
 if (image_xscale &gt; 3.6 &amp;&amp; random(1000) &lt; 6) {
-    //Create New Enemy
-    MyChild = instance_create(x, y, oEnemy);
-    MyChild.MyColor = MyColor
-    MyChild.image_blend = MyColor
-    
-    image_xscale -= 2;
-    image_yscale = image_xscale;  
-    
-    audio_play_sound(aSpawn, 1, false)
+    SplitIntoTwo();
 }
 
 </string>

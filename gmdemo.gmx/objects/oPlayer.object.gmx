@@ -31,6 +31,8 @@ MyGun = instance_create(x, y, oGun)
 // Initialize Shadow
 MyShadow = instance_create(x, y, oShadow)
 MyShadow.image_alpha = 0.5
+MyShadow.image_xscale = image_xscale * 0.9
+MyShadow.image_yscale = MyShadow.image_xscale
 
 // Track Bullet Color
 BulletColor = -1
@@ -59,7 +61,7 @@ BulletColor = -1
             <string>/* Movement */
 
 // reset movement variables
-MySpeed = 300 / room_speed
+MySpeed = 340 / room_speed
 MySprite = "still" //which sprite is used to show player
 AngleGoal = 0 //player intended angle, based off of movement
 KeysPressed = 0 //how many directional keys being pressed
@@ -124,14 +126,14 @@ if mouse_check_button(mb_left) {
     BulletOffset = random_range(-5, 5)
     
     MyBullet.direction = MyGun.image_angle + BulletOffset
-    MyBullet.speed = 600 / room_speed
+    MyBullet.speed = 900 / room_speed
     MyBullet.image_angle = MyGun.image_angle + BulletOffset
     MyBullet.image_blend = BulletColor
     MyBullet.MyColor = BulletColor
     
     
     //Kickback
-    Kick = 5
+    Kick = 3
     KickDirection = MyGun.image_angle + 180
     
     x += lengthdir_x(Kick, KickDirection)
@@ -148,6 +150,7 @@ MyGun.y = y
 MyGun.image_angle = point_direction(x,y,mouse_x,mouse_y)
 MyGun.direction = direction
 MyGun.speed = speed
+MyGun.image_blend = BulletColor
 
 //so does shadow
 MyShadow.x = x
@@ -172,8 +175,11 @@ if instance_exists(IncomingEnemy) {
     for (i = 0; i &lt; 10; i++) {
         NewSplat = instance_create(x + random(40) - 20, y + random(40) - 20, oSplat)
         NewSplat.image_blend = make_colour_rgb(5,5,5)
-        NewSplat.image_xscale = random(2) + .5
+        NewSplat.image_xscale = random(1) + .25
         NewSplat.image_yscale = NewSplat.image_xscale
+        NewSplat.image_angle = random(360)
+        NewSplat.direction = random(360)
+        NewSplat.speed = random(MySpeed)
     }
     oGame.GameOver = true;
 }

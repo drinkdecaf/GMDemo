@@ -107,20 +107,15 @@ if GameOver {
 
 
 } else {
-    if instance_number(oEnemy) &lt; 2 {
-        instance_create(random(room_width), random(room_height), oEnemy)
-    }
-
-    if score &gt; 3 and instance_number(oEnemy) &lt; 3 {
-        instance_create(random(room_width), random(room_height), oEnemy)
-    }
-
-    if score &gt; 5 and instance_number(oEnemy) &lt; 4 {
-        instance_create(random(room_width), random(room_height), oEnemy)
-    }
-    
-    if score &gt; 10 and instance_number(oEnemy) &lt; 6 {
-        instance_create(random(room_width), random(room_height), oEnemy)
+    if instance_number(oEnemy) &lt; 2 or score &gt;= instance_number(oEnemy) * 1.5 {
+        if choose(true, false) {
+            XPlace = choose(2, room_width - 2);
+            YPlace = random(room_height);
+        } else {
+            XPlace = random(room_width);
+            YPlace = choose(2, room_height - 2);
+        }
+        instance_create(XPlace, YPlace, oEnemy);
     }
 }
 </string>
