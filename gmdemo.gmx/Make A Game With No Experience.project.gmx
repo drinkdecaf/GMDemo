@@ -20,7 +20,6 @@
     <sprite>sprites\sBullet</sprite>
     <sprite>sprites\sShadow</sprite>
     <sprite>sprites\sSplat</sprite>
-    <sprite>sprites\sGameOver</sprite>
     <sprite>sprites\sMarker</sprite>
   </sprites>
   <backgrounds name="background">
@@ -31,6 +30,10 @@
     <script>scripts\line_rect_col_inside.gml</script>
     <script>scripts\SplitIntoTwo.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fMain</font>
+    <font>fonts\fSmall</font>
+  </fonts>
   <objects name="objects">
     <object>objects\oEnemy</object>
     <object>objects\oBullet</object>
